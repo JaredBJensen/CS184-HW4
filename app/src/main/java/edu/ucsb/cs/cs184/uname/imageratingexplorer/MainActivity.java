@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         final TextView textView = (TextView)findViewById(R.id.textView);
         final ImageView imageView = (ImageView)findViewById(R.id.imageView);
 
-        // Although this class is called "TaggedImageRetriever", you don't have to deal with tags in this assignment.
         ImageRetriever.getImageList(new ImageRetriever.ImageListResultListener() {
             @Override
             public void onImageList(ArrayList<String> list) {
