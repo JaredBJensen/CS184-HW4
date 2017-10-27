@@ -22,11 +22,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageTagDatabaseHelper.Initialize(this);
+        ImageRatingDatabaseHelper.Initialize(this);
 
         final TextView textView = (TextView)findViewById(R.id.textView);
         final ImageView imageView = (ImageView)findViewById(R.id.imageView);
 
+        // Although this class is called "TaggedImageRetriever", you don't have to deal with tags in this assignment.
         TaggedImageRetriever.getNumImages(new TaggedImageRetriever.ImageNumResultListener() {
             @Override
             public void onImageNum(int num) {
@@ -44,12 +45,6 @@ public class MainActivity extends AppCompatActivity {
                     } catch (IOException e) {
                     }
                     Picasso.with(MainActivity.this).load(getFileStreamPath("Test.jpg")).resize(500,500).centerCrop().into(imageView);
-                    // imageView.setImageBitmap(image.image);
-                    StringBuilder tagList = new StringBuilder();
-                    for (String p : image.tags) {
-                        tagList.append(p + "\n");
-                    }
-                    textView.setText(textView.getText() + "\n\n" + tagList.toString());
                 }
             }
         });
@@ -58,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ImageTagDatabaseHelper.GetInstance().close();
+        ImageRatingDatabaseHelper.GetInstance().close();
     }
 
     @Override

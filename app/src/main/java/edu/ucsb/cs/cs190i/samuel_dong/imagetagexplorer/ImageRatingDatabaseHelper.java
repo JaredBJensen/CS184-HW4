@@ -1,39 +1,42 @@
 package edu.ucsb.cs.cs190i.samuel_dong.imagetagexplorer;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Samuel on 5/2/2017.
+ * Created by Donghao on 10/26/2017.
  */
 
-public class ImageTagDatabaseHelper extends SQLiteOpenHelper {
-    private static final String CreateImageTable = "CREATE TABLE Image (Id integer PRIMARY KEY AUTOINCREMENT, Uri text NOT NULL UNIQUE);";
-    private static final String CreateTagTable = "CREATE TABLE Tag (Id integer PRIMARY KEY AUTOINCREMENT, Text text NOT NULL UNIQUE);";
-    private static final String CreateLinkTable =
-            "CREATE TABLE Link (ImageId integer, TagId integer, PRIMARY KEY (ImageId, TagId), " +
-                    "FOREIGN KEY (ImageId) REFERENCES Image (Id) ON DELETE CASCADE ON UPDATE NO ACTION, " +
-                    "FOREIGN KEY (TagId) REFERENCES Tag (Id) ON DELETE CASCADE ON UPDATE NO ACTION);";
-    private static final String DatabaseName = "ImageTagDatabase.db";
-    private static ImageTagDatabaseHelper Instance;
+public class ImageRatingDatabaseHelper extends SQLiteOpenHelper {
+    private static final String CreateImageTable = "CREATE TABLE Image (Id integer PRIMARY KEY AUTOINCREMENT, Uri text NOT NULL UNIQUE, Rating real);";
+    private static final String DatabaseName = "ImageRatingDatabase.db";
+    private static ImageRatingDatabaseHelper Instance;
     private List<OnDatabaseChangeListener> Listeners;
 
-    private ImageTagDatabaseHelper(Context context) {
+    private ImageRatingDatabaseHelper(Context context) {
         super(context, DatabaseName, null, 1);
         Listeners = new ArrayList<>();
     }
 
     public static void Initialize(Context context) {
-        Instance = new ImageTagDatabaseHelper(context);
+        Instance = new ImageRatingDatabaseHelper(context);
     }
 
-    public static ImageTagDatabaseHelper GetInstance() {
+    public static ImageRatingDatabaseHelper GetInstance() {
         return Instance;
     }
 
@@ -62,8 +65,6 @@ public class ImageTagDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CreateImageTable);
-        db.execSQL(CreateTagTable);
-        db.execSQL(CreateLinkTable);
     }
 
     @Override
