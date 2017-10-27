@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,24 +29,21 @@ public class MainActivity extends AppCompatActivity {
         final ImageView imageView = (ImageView)findViewById(R.id.imageView);
 
         // Although this class is called "TaggedImageRetriever", you don't have to deal with tags in this assignment.
-        TaggedImageRetriever.getNumImages(new TaggedImageRetriever.ImageNumResultListener() {
+        ImageRetriever.getImageList(new ImageRetriever.ImageListResultListener() {
             @Override
-            public void onImageNum(int num) {
-                textView.setText(textView.getText() + "\n\n" + num);
-            }
-        });
-
-        TaggedImageRetriever.getTaggedImageByIndex(0, new TaggedImageRetriever.TaggedImageResultListener() {
-            @Override
-            public void onTaggedImage(TaggedImageRetriever.TaggedImage image) {
-                if (image != null) {
-                    try (FileOutputStream stream = openFileOutput("Test.jpg", Context.MODE_PRIVATE)){
-                        image.image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                        image.image.recycle();
-                    } catch (IOException e) {
+            public void onImageList(ArrayList<String> list) {
+                textView.setText(String.format("Total number: %d", list.size()));
+                ImageRetriever.getImageByIndex(0, new ImageRetriever.ImageResultListener() {
+                    @Override
+                    public void onImage(Bitmap image) {
+                        try (FileOutputStream stream = openFileOutput("Test.jpg", Context.MODE_PRIVATE)){
+                            image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                            image.recycle();
+                        } catch (IOException e) {
+                        }
+                        Picasso.with(MainActivity.this).load(getFileStreamPath("Test.jpg")).resize(500,500).centerCrop().into(imageView);
                     }
-                    Picasso.with(MainActivity.this).load(getFileStreamPath("Test.jpg")).resize(500,500).centerCrop().into(imageView);
-                }
+                });
             }
         });
     }
