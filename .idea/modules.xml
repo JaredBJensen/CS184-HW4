@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CS184-HW4.iml" filepath="$PROJECT_DIR$/CS184-HW4.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cs184_hw4_starter.iml" filepath="$PROJECT_DIR$/cs184_hw4_starter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cs190i_hw4_starter.iml" filepath="$PROJECT_DIR$/cs190i_hw4_starter.iml" />
     </modules>
   </component>
 </project>

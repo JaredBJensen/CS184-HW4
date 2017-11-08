@@ -1,4 +1,4 @@
-package edu.ucsb.cs.cs184.uname.imageratingexplorer;
+package edu.ucsb.cs.cs184.jaredbjensen.imageratingexplorer;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

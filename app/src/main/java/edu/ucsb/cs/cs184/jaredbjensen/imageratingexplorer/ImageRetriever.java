@@ -1,7 +1,4 @@
-package edu.ucsb.cs.cs184.uname.imageratingexplorer;
-/**
- * Created by jalexander on 5/2/17.
- */
+package edu.ucsb.cs.cs184.jaredbjensen.imageratingexplorer;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +10,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class ImageRetriever {
     private static String baseUrl = "http://ec2-52-53-191-204.us-west-1.compute.amazonaws.com:8080/";

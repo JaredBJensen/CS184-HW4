@@ -1,4 +1,4 @@
-package edu.ucsb.cs.cs184.uname.imageratingexplorer;
+package edu.ucsb.cs.cs184.jaredbjensen.imageratingexplorer;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,9 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Donghao on 10/26/2017.
- */
 
 public class ImageRatingDatabaseHelper extends SQLiteOpenHelper {
     private static final String CreateImageTable = "CREATE TABLE Image (Id integer PRIMARY KEY AUTOINCREMENT, Uri text NOT NULL UNIQUE, Rating real);";

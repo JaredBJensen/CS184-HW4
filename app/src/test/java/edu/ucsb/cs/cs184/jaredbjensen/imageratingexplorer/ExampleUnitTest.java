@@ -1,4 +1,4 @@
-package edu.ucsb.cs.cs184.uname.imageratingexplorer;
+package edu.ucsb.cs.cs184.jaredbjensen.imageratingexplorer;
 
 import org.junit.Test;
 
