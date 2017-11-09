@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> implements ImageRatingDatabaseHelper.OnDatabaseChangeListener {
 
     private List<Image> images;
     private Context context;
@@ -28,6 +28,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     public ImageAdapter(List<Image> images, Context context) {
         this.images = images;
         this.context = context;
+    }
+
+    @Override
+    public void OnDatabaseChange() {
+        notifyDataSetChanged();
     }
 
     @Override
@@ -50,18 +55,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         Image image = images.get(position);
 
         // Set item views based on your views and data model
-        viewHolder.ratingBar.setRating(image.getRating());
         ImageView imageView = viewHolder.imageView;
 
-        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
-        try (FileOutputStream stream = context.openFileOutput(timestamp, Context.MODE_PRIVATE)){
-            image.getSrc().compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            image.getSrc().recycle();
-            Log.i("", "file opened");
-        } catch (IOException e) {
-            Log.e("fileoutput", e.getMessage());
-        }
-        Picasso.with(context).load(context.getFileStreamPath(timestamp)).resize(500,500).centerCrop().into(imageView);
+        Picasso.with(context).load(context.getFileStreamPath(image.getName())).resize(600,600).centerCrop().into(imageView);
     }
 
     // Returns the total count of items in the list
@@ -74,7 +70,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public ImageView imageView;
-        public RatingBar ratingBar;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -84,7 +79,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             super(itemView);
 
             imageView = (ImageView) itemView.findViewById(R.id.imageLarge);
-            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBarLarge);
         }
     }
 
